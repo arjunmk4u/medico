@@ -56,8 +56,10 @@ const Nav = () => {
             </button>
           </div>
 
+            {/* mobile view */}
+          
           <div
-            className={`fixed inset-0 bg-bg-secondary w-1/2 h-full flex flex-col items-center justify-start transition-opacity duration-500 ${
+            className={`fixed inset-0 bg-bg-secondary w-28 text-center h-full flex flex-col items-center justify-start transition-opacity duration-500 ${
               isOpen ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
           >

@@ -5,7 +5,7 @@ import { BsArrowRightCircle } from "react-icons/bs";
 function LandingPage() {
   return (
     <>
-      <div className="container-md h-screen md:flex items-center flex-row-reverse md:w-full md:h-screen overflow-hidden bg-bg-primary">
+      <div className="container-md h-full md:flex items-center flex-row-reverse md:w-full md:h-screen overflow-hidden bg-bg-primary">
         <div className="right-side md:w-full md:h-screen ">
           <img
             src={bg}
@@ -28,7 +28,7 @@ function LandingPage() {
             enabling patients to schedule appointments with their preferred
             doctors effortlessly.
           </p>
-          <button className="group bg-primary h-auto  p-2 rounded-md my-1 text-bg-secondary  text-center flex items-center justify-around shadow-md transition  duration-300 ease-in-out  hover:scale-110">
+          <button className="group bg-primary h-auto my-3 p-2 rounded-md my-1 text-bg-secondary  text-center flex items-center justify-around shadow-md transition  duration-300 ease-in-out  hover:scale-110">
             Explore More{" "}
             <BsArrowRightCircle className="w-auto h-full text-center mx-2 py-1 text-bold animate-pulse transition-all duration-100  group-hover:translate-x-1 " />
           </button>
