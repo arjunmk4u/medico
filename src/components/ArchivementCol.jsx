@@ -20,7 +20,7 @@ const ArchivementCol = () => {
     });
   return (
     <>
-      <div ref={ref} className="container container-md h-full my-20 md:my-0 md:w-full mx-auto space-y-5 md:flex items-center justify-between inset-0 text-center md:px-28 md:py-16 px-10">
+      <div ref={ref} className="container container-md h-full my-20 md:my-0 md:w-full mx-auto  md:flex items-center justify-between inset-0 text-center md:px-28 md:py-10 px-10">
         <div className="experience py-5 ">
           <div className="count text-4xl font-bold">{inView ? <CountUp  end={150} /> : 0}+</div>
           <div className="text md:text-xl">experienced staff</div>

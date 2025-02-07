@@ -69,11 +69,11 @@ const MissionPage = () => {
         </div>
 
         {/* Right Section: Image */}
-        <div className="image md:w-1/2 flex items-center justify-center ">
+        <div className="image md:w-1/2 flex md:h-[300px] object-cover overflow-hidden items-start space-x-10 -my-2  justify-center ">
           <img
             src={about_two}
             alt="image of a doctor consulting a patient"
-            className="w-full h-auto  m-2"
+            className="w-full h-auto  md:-m-10 m-4"
           />
         </div>
       </div>
