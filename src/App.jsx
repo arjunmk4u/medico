@@ -7,6 +7,7 @@ import MissionPage  from './components/MissionPage'
 import ArchivementCol  from './components/ArchivementCol'
 import ContactPage  from './components/ContactPage'
 import MedicalHomePage from './components/medical/MedicalHomePage'
+import FooterPage from './components/FooterPage'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <MissionPage />
       <ArchivementCol />
       <ContactPage />
+      <FooterPage />
 
       {/* s<MedicalHomePage /> */}
     </div>
