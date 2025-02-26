@@ -5,12 +5,12 @@ import { BsArrowRightCircle } from "react-icons/bs";
 function LandingPage() {
   return (
     <>
-      <div className="container-md h-full md:flex items-center flex-row-reverse md:w-full md:h-screen overflow-hidden bg-bg-primary">
-        <div className="right-side md:w-full md:h-screen ">
+      <div className="container-md h-full xl:flex items-center flex-row-reverse xl:w-full xl:h-screen overflow-hidden bg-bg-primary">
+        <div className="right-side xl:w-full xl:h-screen ">
           <img
             src={bg}
             alt="Image of a doctor holding a sthethescope"
-            className="w-full h-auto  md:w-full mx-auto "
+            className="  mx-auto "
           />
         </div>
         <div className="left-side mx-auto px-10 md:px-28 inset-0 ">

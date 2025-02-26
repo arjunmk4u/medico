@@ -4,9 +4,9 @@ const FooterPage = () => {
   return (
     <>
     <div className="footer">
-        <div className="container-md flex text-center justify-center items-center">
+        <div className="container-md flex text-center h-14 justify-center text-gray-500 items-center">
 
-        <FaRegCopyright className='mx-2 text-sm'/> Copyright to medico private limited
+        <FaRegCopyright className='mx-2 text-sm'/> 2025 MEDICO. All rights reserved
         </div>
     </div>
     </>

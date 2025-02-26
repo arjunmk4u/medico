@@ -4,6 +4,10 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
+
+
+// handling scroll for bg color change 
+
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +22,9 @@ const Nav = () => {
   }, []);
   return (
     <>
+
+    {/* nav items  */}
+
       <div
         className={`container-md  md:block mx-auto py-3  inset-0 px-10 md:px-28 h-14 fixed transition-all ease-in-out duration-500 ${
           scrolled ? "bg-bg-secondary shadow-md" : "bg-transparent"
@@ -27,6 +34,9 @@ const Nav = () => {
           <div className="logo ">
             <img src={medico_logo} className="w-24 aspect-auto " alt="" />
           </div>
+
+        {/* nav buton for mobile devices */}
+
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-primary"
@@ -39,6 +49,9 @@ const Nav = () => {
               scrolled ? "bg-bg-secondary shadow-none" : "bg-bg-secondary"
             } `}
           >
+
+            {/* normal view nav  */}
+
             <a href="" className="px-5 group " aria-current="page">
               HOME
               <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>
