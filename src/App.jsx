@@ -1,30 +1,24 @@
-import { useState } from 'react'
-import './App.css'
-import LandingPage from './components/LandingPage'
-import Nav from './components/Nav'
-import AboutPage from './components/AboutPage'
-import MissionPage  from './components/MissionPage'
-import ArchivementCol  from './components/ArchivementCol'
-import ContactPage  from './components/ContactPage'
-// import MedicalHomePage from './components/medical/MedicalHomePage'
-import FooterPage from './components/FooterPage'
-import Vission from './components/Vission'
+import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Nav from "./components/Nav";
+import AboutPage from "./components/AboutPage";
+import MissionPage from "./components/MissionPage";
+import ArchivementCol from "./components/ArchivementCol";
+import ContactPage from "./components/ContactPage";
+import FooterPage from "./components/FooterPage";
+import Vission from "./components/Vission";
+import HomeLayout from "./components/HomeLayout";
 
 function App() {
   return (
-    <div >
+    <Router>
       <Nav />
-      <LandingPage />
-      <AboutPage />
-      <MissionPage />
-      <ArchivementCol />
-      <Vission />
-      <ContactPage />
-      <FooterPage />
-
-      {/* s<MedicalHomePage /> */}
-    </div>
-  )
+      <Routes>
+        <Route path="/" element={<HomeLayout />}/>
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

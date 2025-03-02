@@ -1,8 +1,10 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import medico_logo from "../assets/img/medico_logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-scroll";
 
 
 
@@ -25,7 +27,7 @@ const Nav = () => {
 
     {/* nav items  */}
 
-      <div
+      <nav
         className={`container-md  md:block mx-auto py-3  inset-0 px-10 md:px-28 h-14 fixed transition-all ease-in-out duration-500 ${
           scrolled ? "bg-bg-secondary shadow-md" : "bg-transparent"
         }  `}
@@ -41,7 +43,7 @@ const Nav = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden text-primary"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+            {isOpen ? <X size={30} /> : <Menu size={28} className="font-bold text-xl" />}
           </button>
           <div
             id="navbar-default"
@@ -52,18 +54,18 @@ const Nav = () => {
 
             {/* normal view nav  */}
 
-            <a href="" className="px-5 group " aria-current="page">
+            <Link to="Home" smooth={true} duration={500} offset={-70}   className="px-5 group " aria-current="page">
               HOME
-              <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>
-            </a>
-            <a href="" className="px-5 group">
+              <div className=" bg-primary h-[2px] w-0 transition-all hover:animate-ping ease-out group-hover:w-full duration-150"></div>
+            </Link>
+            <Link to ="about" smooth={true} duration={500} offset={-70} className="px-5 group">
               ABOUT
               <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>
-            </a>
-            <a href="" className="px-5 group">
+            </Link>
+            <Link to ="contact" smooth={true} duration={500} offset={-70}  className="px-5 group">
               CONTACT
               <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>
-            </a>
+            </Link>
             <button className="px-5 mx-1 font-bold bg-primary rounded-md h-7 text-bg-primary shadow-md transition delay-100 ease-in-out hover:scale-110 ">
               LOG IN
             </button>
@@ -101,7 +103,7 @@ const Nav = () => {
             </ul>
           </div>
         </div>
-      </div>
+      </nav>
     </>
   );
 };

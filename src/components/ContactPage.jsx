@@ -34,9 +34,7 @@ const ContactPage = () => {
             </div>
             <div className="addrress">
               <p>
-                Baby Memorial Hospital <br />
-                Vazhachal P.O <br />
-                Thrissur 
+                Lorem ipsum,<br/> dolor sit amet <br/> consectetur <br/> adipisicing 
               </p>
             </div>
           </div>

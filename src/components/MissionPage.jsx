@@ -19,14 +19,14 @@ const MissionPage = () => {
     <>
       {/* mission */}
       <div
-        className={`container-md md:w-full h-full bg-bg-primary flex-row-reverse mx-auto md:flex items-center justify-between inset-0 md:px-28 md:py-28 px-10 ${
+        className={`container-md md:w-full h-full shadow-xl bg-bg-primary flex-row-reverse mx-auto md:flex items-center justify-between inset-0 md:px-28 md:py-28 px-10 ${
           scrolled ? "opacity-100" : "opacity-0"
         }`}
       >
         {/* Left Section: About Headline and Paragraph */}
         <div className="about md:w-1/2 flex flex-col justify-center">
-          <div className="heading text-xl md:text-3xl font-primary my-3 font-bold">
-            Our Mission : Delivering compassionate, high-quality care and
+          <div className="heading text-xl md:text-3xl font-primary my-3 font-semibold">
+            <span className="text-primary font-extrabold">Our Mission</span>  : Delivering compassionate, high-quality care and
             promoting well-being for all
           </div>
           <div className="paragraph">
