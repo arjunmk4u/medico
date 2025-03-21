@@ -67,7 +67,7 @@ const Nav = () => {
               <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>
             </Link>
             <button className="px-5 mx-1 font-bold bg-primary rounded-md h-7 text-bg-primary shadow-md transition delay-100 ease-in-out hover:scale-110 ">
-              LOG IN
+            <NavLink to="/login">LOG IN</NavLink>
             </button>
           </div>
 
