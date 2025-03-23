@@ -54,10 +54,10 @@ const Nav = () => {
 
             {/* normal view nav  */}
 
-            <Link to="Home" smooth={true} duration={500} offset={-70}   className="px-5 group " aria-current="page">
+            <NavLink to="/" smooth={true} duration={500} offset={-70}   className="px-5 group " aria-current="page">
               HOME
               <div className=" bg-primary h-[2px] w-0 transition-all hover:animate-ping ease-out group-hover:w-full duration-150"></div>
-            </Link>
+            </NavLink>
             <Link to ="about" smooth={true} duration={500} offset={-70} className="px-5 group">
               ABOUT
               <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>

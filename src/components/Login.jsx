@@ -12,19 +12,26 @@ const Login = () => {
     setError(""); // Clear previous errors
 
     try {
-        const response = await fetch("http://localhost:5000/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-          });
-          
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
       const data = await response.json();
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/dashboard"); // Redirect after successful login
+
+        // Redirect based on role
+        if (data.user.role === "admin") {
+          navigate("/admin");
+        } else if (data.user.role === "doctor") {
+          navigate("/doctor");
+        } else {
+          navigate("/dashboard");
+        }
       } else {
         setError(data.error || "Invalid credentials");
       }
@@ -46,7 +53,7 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 border rounded"
               required
-              />
+            />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Password:</label>
@@ -56,13 +63,15 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border rounded"
               required
-              />
+            />
           </div>
-          <button type="submit" className="w-full bg-primary text-white py-2 rounded">
+          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
             Login
           </button>
         </form>
-              {error && <p className="text-red-500">{error}</p>}
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        <p className="text-center text-gray-500 mt-4">Don't have an account? <a href="/signup" className="text-blue-500">Signup</a></p>
+
       </div>
     </div>
   );
