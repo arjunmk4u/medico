@@ -8,7 +8,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Patients from "./components/Patients";
 import BookAppointment from "./components/BookAppointment";
-import AdminDashboard from "./components/Admindashboard";
+import AdminDashboard from "./components/AdminDashboard";
 import DoctorDashboard from "./components/DoctorDasboard";
 import AdminDoctorManagement from "./components/AdminDoctorManagement";
 import Register from "./components/Register";
