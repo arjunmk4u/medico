@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 import {
   FaUserMd,
   FaCalendarCheck,
-  FaUser,
-  FaChartLine,
   FaClock,
   FaCheckCircle,
-  FaTimesCircle,
 } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
 import {
   Card,
   Button,
@@ -114,6 +112,12 @@ const AdminDashboard = () => {
     );
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = '/login'
+  };
+
   // Loading state
   if (dashboardData.loading) {
     return (
@@ -143,7 +147,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="pt-20 px-10 sm:px-6 lg:px-28 bg-gray-50 min-h-screen pb-12 ">
+    <div className="pt-10 px-10 sm:px-6 lg:px-28 bg-gray-50 min-h-screen pb-12 ">
       {/* Dashboard Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 ">
         <div>
@@ -160,6 +164,12 @@ const AdminDashboard = () => {
             <Button color="gray" as={Link} to="/appointments">
               View Appointments
             </Button>
+            <button
+                          onClick={handleLogout}
+                          className="flex items-center text-gray-500 hover:text-gray-700"
+                        >
+                          <FiLogOut className="mr-1" /> Logout
+                        </button>
           </Button.Group>
         </div>
       </div>

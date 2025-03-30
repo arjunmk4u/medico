@@ -1,28 +1,30 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Nav from "./components/Nav";
 import HomeLayout from "./components/HomeLayout";
 import LogIn from "./components/Login";
-import UserDashboard from "./components/Dashboard"; // Updated import
+import UserDashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Patients from "./components/Patients";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminDoctorManagement from "./components/AdminDoctorManagement";
 import Register from "./components/Register";
 import AppointmentsList from "./components/AppointmentsList";
-import AppointmentDetail from "./components/AppointmentDetail";
 import DoctorDashboard from "./components/DoctorDashboard";
 import PredictionTool from "./components/PredictionTool";
+import GlobalLoader from "./components/GlobalLoader";
 
-
-function App() {
-  const currentUser = JSON.parse(localStorage.getItem("user")) || null;
+const AppContent = () => {
+  const location = useLocation(); 
+  const showNavbar = ["/", "/login", "/signup"].includes(location.pathname); // Show Nav on these pages
 
   return (
-    <Router>
-      <Nav />
+    <>
+      <GlobalLoader />
+      {showNavbar && <Nav />} {/* Show Navbar on Home, Login, and Signup */}
+
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -35,6 +37,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
+
       <Routes>
         <Route path="/" element={<HomeLayout />} />
         <Route path="/login" element={<LogIn />} />
@@ -44,7 +47,7 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute allowedRoles={["user"]}>
-              <UserDashboard /> {/* Updated component name */}
+              <UserDashboard />
             </ProtectedRoute>
           }
         />
@@ -80,10 +83,18 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/predict" element = {<PredictionTool />} />
+        <Route path="/predict" element={<PredictionTool />} />
       </Routes>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
-}
+};
 
 export default App;

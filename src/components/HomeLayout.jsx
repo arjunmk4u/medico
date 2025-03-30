@@ -6,7 +6,6 @@ import ArchivementCol from "./ArchivementCol";
 import ContactPage from "./ContactPage";
 import Vission from "./Vission";
 import FooterPage from "./FooterPage";
-import MedicalHomePage from "./medical/MedicalHomePage";
 
 function HomeLayout() {
   return (
@@ -32,7 +31,6 @@ function HomeLayout() {
         <ContactPage />
       </section>
       <FooterPage />
-      {/* <MedicalHomePage /> */}
 
       {/* Outlet for Dynamic Navigation (Optional) */}
       {/* <Outlet /> */}

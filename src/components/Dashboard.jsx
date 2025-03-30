@@ -25,6 +25,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookAppointmentModal from "./BookAppointmentModal";
+import MLPredictor from "./PredictionTool";
 
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
@@ -42,6 +43,18 @@ const UserDashboard = () => {
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [predictionType, setPredictionType] = useState(null);
+
+  const handleOpenModal = (type) => {
+    setPredictionType(type);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setPredictionType(null);
+  };
 
   const user = useMemo(
     () => JSON.parse(localStorage.getItem("user")) || {},
@@ -204,7 +217,10 @@ const UserDashboard = () => {
   };
 
   const handleNewAppointment = (newAppointment) => {
-    setAppointments((prevAppointments) => [newAppointment, ...prevAppointments]); 
+    setAppointments((prevAppointments) => [
+      newAppointment,
+      ...prevAppointments,
+    ]);
   };
 
   const handleSignOut = () => {
@@ -381,13 +397,13 @@ const UserDashboard = () => {
                   icon: FaHeartbeat,
                   title: "Heart Disease Prediction",
                   desc: "Get a risk assessment for heart disease.",
-                  onClick: () => toast.info("Feature coming soon!"),
+                  onClick: () => handleOpenModal("heart"),
                 },
                 {
                   icon: FaStethoscope,
                   title: "Diabetes Prediction",
                   desc: "Assess your risk for diabetes.",
-                  onClick: () => toast.info("Feature coming soon!"),
+                  onClick: () => handleOpenModal("diabetes"),
                 },
               ].map(({ icon: Icon, title, desc, onClick }, index) => (
                 <div
@@ -403,6 +419,15 @@ const UserDashboard = () => {
                 </div>
               ))}
             </div>
+
+            {/* Modal for disease prediction */}
+            {isModalOpen && (
+              <MLPredictor
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                type={predictionType}
+              />
+            )}
           </>
         )}
 
