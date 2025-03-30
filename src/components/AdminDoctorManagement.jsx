@@ -1,4 +1,18 @@
 import { useState, useEffect } from "react";
+import {
+  Table,
+  Button,
+  Card,
+  Modal,
+  TextInput,
+  Textarea,
+  Spinner,
+} from "flowbite-react";
+import {
+  HiOutlinePencilAlt,
+  HiOutlineTrash,
+  HiOutlinePlus,
+} from "react-icons/hi";
 
 const AdminDoctorManagement = () => {
   const [doctors, setDoctors] = useState([]);
@@ -6,11 +20,15 @@ const AdminDoctorManagement = () => {
     name: "",
     email: "",
     phone: "",
-    specialty: "", // ✅ Fixed field name
+    specialty: "",
     description: "",
     image: "",
+    password: "", // 🔹 New: Password field
+    role: "doctor", // 🔹 Default role
   });
   const [editingId, setEditingId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch doctors from backend
   const fetchDoctors = async () => {
@@ -20,6 +38,8 @@ const AdminDoctorManagement = () => {
       setDoctors(data);
     } catch (error) {
       console.error("Error fetching doctors:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,8 +76,10 @@ const AdminDoctorManagement = () => {
           specialty: "",
           description: "",
           image: "",
+          password: "", // Reset password field
         });
         setEditingId(null);
+        setIsModalOpen(false);
       }
     } catch (error) {
       console.error("Error saving doctor:", error);
@@ -76,115 +98,166 @@ const AdminDoctorManagement = () => {
     }
   };
 
-  // Set editing mode
+  // Open modal for adding a new doctor (reset form)
+  const handleOpenAddModal = () => {
+    setForm({
+      name: "",
+      email: "",
+      phone: "",
+      specialty: "",
+      description: "",
+      image: "",
+      password: "",
+      role: "doctor",
+    });
+    setEditingId(null);
+    setIsModalOpen(true);
+  };
+
+  // Open modal for editing an existing doctor (populate form)
   const handleEdit = (doctor) => {
-    setForm(doctor);
+    setForm({ ...doctor, password: "" }); // Don't pre-fill password
     setEditingId(doctor._id);
+    setIsModalOpen(true);
   };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h2 className="text-2xl font-bold mb-4">Manage Doctors</h2>
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        Manage Doctors
+      </h2>
 
-      {/* Doctor Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-4 rounded shadow mb-6"
-      >
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Name"
-          className="border p-2 w-full mb-2"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="Email"
-          className="border p-2 w-full mb-2"
-          required
-        />
-        <input
-          type="text"
-          name="phone"
-          value={form.phone}
-          onChange={handleChange}
-          placeholder="Phone"
-          className="border p-2 w-full mb-2"
-          required
-        />
-        <input
-          type="text"
-          name="specialty"
-          value={form.specialty}
-          onChange={handleChange}
-          placeholder="Specialty"
-          className="border p-2 w-full mb-2"
-          required
-        />
-        <textarea
-          name="description"
-          value={form.description}
-          onChange={handleChange}
-          placeholder="Description"
-          className="border p-2 w-full mb-2"
-        ></textarea>
-        <input
-          type="text"
-          name="image"
-          value={form.image}
-          onChange={handleChange}
-          placeholder="Image URL"
-          className="border p-2 w-full mb-2"
-        />
-
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded w-full"
+      {/* Add Doctor Button */}
+      <div className="flex justify-end mb-4">
+        <Button
+          onClick={handleOpenAddModal}
+          className="flex items-center gap-2 bg-primary hover:bg-green-500"
         >
-          {editingId ? "Update Doctor" : "Add Doctor"}
-        </button>
-      </form>
-
-      {/* Doctors List */}
-      <div className="bg-white p-4 rounded shadow">
-        <h3 className="text-xl font-bold mb-3">Doctor List</h3>
-        {doctors.length === 0 ? (
-          <p>No doctors available.</p>
-        ) : (
-          <ul>
-            {doctors.map((doctor) => (
-              <li
-                key={doctor._id}
-                className="border-b py-2 flex justify-between items-center"
-              >
-                <span>
-                  {doctor.name} - {doctor.specialty}
-                </span>
-                <div>
-                  <button
-                    onClick={() => handleEdit(doctor)}
-                    className="bg-yellow-500 text-white px-3 py-1 mr-2 rounded"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(doctor._id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+          <HiOutlinePlus className="text-lg " />
+          Add Doctor
+        </Button>
       </div>
+
+      {/* Doctor List */}
+      <Card className="p-6">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Doctor List</h3>
+
+        {loading ? (
+          <div className="flex justify-center py-6">
+            <Spinner size="xl" />
+          </div>
+        ) : doctors.length === 0 ? (
+          <p className="text-gray-500 text-center">No doctors available.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <Table>
+              <Table.Head>
+                <Table.HeadCell>Name</Table.HeadCell>
+                <Table.HeadCell>Email</Table.HeadCell>
+                <Table.HeadCell>Specialty</Table.HeadCell>
+                <Table.HeadCell>Actions</Table.HeadCell>
+              </Table.Head>
+              <Table.Body>
+                {doctors.map((doctor) => (
+                  <Table.Row key={doctor._id} className="hover:bg-gray-100">
+                    <Table.Cell className="font-semibold">
+                      {doctor.name}
+                    </Table.Cell>
+                    <Table.Cell>{doctor.email}</Table.Cell>
+                    <Table.Cell>{doctor.specialty}</Table.Cell>
+                    <Table.Cell>
+                      <div className="flex gap-3">
+                        <Button
+                          size="xs"
+                          color="yellow"
+                          onClick={() => handleEdit(doctor)}
+                        >
+                          <HiOutlinePencilAlt className="text-lg" />
+                        </Button>
+
+                        <Button
+                          size="xs"
+                          color="red"
+                          onClick={() => handleDelete(doctor._id)}
+                        >
+                          <HiOutlineTrash className="text-lg" />
+                        </Button>
+                      </div>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
+        )}
+      </Card>
+
+      {/* Doctor Form Modal */}
+      <Modal show={isModalOpen} size="md" onClose={() => setIsModalOpen(false)}>
+        <Modal.Header>{editingId ? "Edit Doctor" : "Add Doctor"}</Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <TextInput
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Name"
+              required
+            />
+            <TextInput
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Email"
+              required
+            />
+            <TextInput
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Phone"
+              required
+            />
+            <TextInput
+              name="specialty"
+              value={form.specialty}
+              onChange={handleChange}
+              placeholder="Specialty"
+              required
+            />
+            <Textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              placeholder="Description"
+            />
+            <TextInput
+              name="image"
+              value={form.image}
+              onChange={handleChange}
+              placeholder="Image URL"
+            />
+            <TextInput
+              name="password"
+              type="password"
+              value={form.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required={!editingId} // Only required for new doctors
+            />
+
+            <div className="flex justify-end gap-2">
+              <Button color="gray" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" color="blue">
+                {editingId ? "Update" : "Add"}
+              </Button>
+            </div>
+          </form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

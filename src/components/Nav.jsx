@@ -1,18 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import medico_logo from "../assets/img/medico_logo.png";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-scroll";
-
-
-
-// handling scroll for bg color change 
+import { Drawer } from "flowbite-react";
 
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,87 +17,77 @@ const Nav = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <>
-
-    {/* nav items  */}
-
+      {/* Navbar Container */}
       <nav
-        className={`container-md  md:block mx-auto py-3  inset-0 px-10 md:px-28 h-14 fixed transition-all ease-in-out duration-500 ${
+        className={`fixed inset-0 mx-auto px-10 md:px-28 h-14 flex items-center justify-between transition-all duration-500 ${
           scrolled ? "bg-bg-secondary shadow-md" : "bg-transparent"
-        }  `}
+        }`}
       >
-        <div className="navbar flex item-center justify-between">
-          <div className="logo ">
-            <img src={medico_logo} className="w-24 aspect-auto " alt="" />
-          </div>
+        {/* Logo */}
+        <div className="logo">
+          <img src={medico_logo} className="w-24 aspect-auto" alt="Medico Logo" />
+        </div>
 
-        {/* nav buton for mobile devices */}
+        {/* Desktop Navigation */}
+        <div className={`hidden md:flex space-x-6 items-center bg-bg-secondary p-2 rounded-lg ${scrolled ? "shadow-none" : "shadow-lg"}`}>
+          <NavLink to="/" className="group px-5">
+            HOME
+            <div className="bg-primary h-[2px] w-0 group-hover:w-full transition-all duration-150"></div>
+          </NavLink>
+          <Link to="about" smooth={true} duration={500} offset={-70} className="group px-5">
+            ABOUT
+            <div className="bg-primary h-[2px] w-0 group-hover:w-full transition-all duration-150"></div>
+          </Link>
+          <Link to="contact" smooth={true} duration={500} offset={-70} className="group px-5">
+            CONTACT
+            <div className="bg-primary h-[2px] w-0 group-hover:w-full transition-all duration-150"></div>
+          </Link>
+          <NavLink to="/login" className="px-5 bg-primary text-bg-primary font-bold rounded-md h-7 shadow-md transition hover:scale-110">
+            LOG IN
+          </NavLink>
+        </div>
 
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-primary"
-          >
-            {isOpen ? <X size={30} /> : <Menu size={28} className="font-bold text-xl" />}
-          </button>
-          <div
-            id="navbar-default"
-            className={`nav-items  hidden md:flex h-full p-2 transition-all ease-in-out duration-500 rounded-md shadow-md ${
-              scrolled ? "bg-bg-secondary shadow-none" : "bg-bg-secondary"
-            } `}
-          >
+        {/* Mobile Menu Button */}
+        <button onClick={() => setIsDrawerOpen(true)} className="md:hidden text-primary">
+          <Menu size={28} />
+        </button>
 
-            {/* normal view nav  */}
-
-            <NavLink to="/" smooth={true} duration={500} offset={-70}   className="px-5 group " aria-current="page">
-              HOME
-              <div className=" bg-primary h-[2px] w-0 transition-all hover:animate-ping ease-out group-hover:w-full duration-150"></div>
-            </NavLink>
-            <Link to ="about" smooth={true} duration={500} offset={-70} className="px-5 group">
-              ABOUT
-              <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>
-            </Link>
-            <Link to ="contact" smooth={true} duration={500} offset={-70}  className="px-5 group">
-              CONTACT
-              <div className=" bg-primary h-[2px] w-0 transition-all  ease-out group-hover:w-full duration-150"></div>
-            </Link>
-            <button className="px-5 mx-1 font-bold bg-primary rounded-md h-7 text-bg-primary shadow-md transition delay-100 ease-in-out hover:scale-110 ">
-            <NavLink to="/login">LOG IN</NavLink>
+        {/* Mobile Drawer */}
+        <Drawer open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} position="left">
+          <div className="p-6 w-64 bg-bg-secondary h-full">
+            {/* Close Button */}
+            <button onClick={() => setIsDrawerOpen(false)} className="absolute top-4 right-4 text-gray-600">
+              <X size={30} />
             </button>
-          </div>
 
-            {/* mobile view */}
-          
-          <div
-            className={`fixed inset-0 bg-bg-secondary w-28 text-center h-full flex flex-col items-center justify-start transition-opacity duration-500 ${
-              isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-            }`}
-          >
-            <button
-              className="absolute top-5 right-5 text-white"
-              onClick={() => setIsOpen(false)}
-            >
-              <X size={32} />
-            </button>
-            <ul className="space-y-8 text-2xl">
+            {/* Drawer Navigation Links */}
+            <ul className="mt-10 space-y-6 text-lg font-semibold text-gray-800  ">
               <li>
-                <a href="#" className="hover:text-gray-400">
-                  Home
-                </a>
+                <NavLink to="/" onClick={() => setIsDrawerOpen(false)} className="block px-5 py-2  hover:text-primary hover:bg-bg-primary hover:rounded-md">
+                  HOME
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-400">
-                  About
-                </a>
+                <Link to="about" smooth={true} duration={500} offset={-70} onClick={() => setIsDrawerOpen(false)} className="block px-5 py-2 hover:text-primary hover:bg-bg-primary hover:rounded-md">
+                  ABOUT
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-400">
-                  Contact
-                </a>
+                <Link to="contact" smooth={true} duration={500} offset={-70} onClick={() => setIsDrawerOpen(false)} className="block px-5 py-2 hover:text-primary hover:bg-bg-primary hover:rounded-md">
+                  CONTACT
+                </Link>
+              </li>
+              <li>
+                <NavLink to="/login" onClick={() => setIsDrawerOpen(false)} className="block px-5 py-2 bg-primary text-bg-primary rounded-md shadow-md hover:scale-105 transition">
+                  LOG IN
+                </NavLink>
               </li>
             </ul>
           </div>
-        </div>
+        </Drawer>
       </nav>
     </>
   );

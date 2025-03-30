@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import about_one from "../assets/img/about-3_01.png";
 import about_two from "../assets/img/about-4.png";
 
 const Vission = () => {
