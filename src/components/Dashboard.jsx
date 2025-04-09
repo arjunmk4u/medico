@@ -544,9 +544,6 @@ const UserDashboard = () => {
                     <Table.Cell>{doctor.specialty}</Table.Cell>
 
                     <Table.Cell>
-
-
-
                       {/* This section needs to be done by passing the doctor id to the appointment modal. */}
                       <Button
                         size="xs"
