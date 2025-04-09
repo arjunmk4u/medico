@@ -1,5 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
 import {
   Sidebar,
   Drawer,
@@ -42,15 +41,20 @@ const UserDashboard = () => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
-  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [predictionType, setPredictionType] = useState(null);
+  const [selectedDoctorId, setSelectedDoctorId] = useState(null);
 
   // Function to handle modal for disease prediction
   const handleOpenModal = (type) => {
     setPredictionType(type);
     setIsModalOpen(true);
   };
+
+  const handleAppointmentModal = (doctorId) => {
+    setSelectedDoctorId(doctorId);
+    setShowAppointmentModal(true);
+  }
 
   // Function to handle modal for appointment bookings
   const handleCloseModal = () => {
@@ -97,30 +101,31 @@ const UserDashboard = () => {
   };
 
   // Fetching appointments, doctors.
+  const loadData = async () => {
+    try {
+      await Promise.all([
+        fetchData(
+          `http://localhost:5000/api/appointments/user/${userId}`,
+          (data) => setAppointments(data),
+          "Failed to load appointments"
+        ),
+        fetchData(
+          "http://localhost:5000/api/doctors",
+          setDoctors,
+          "Failed to load doctors"
+        ),
+      ]);
+    } finally {
+      setInitialLoading(false);
+    }
+  };
   useEffect(() => {
     if (!userId) return;
 
-    const loadData = async () => {
-      try {
-        await Promise.all([
-          fetchData(
-            `http://localhost:5000/api/appointments/user/${userId}`,
-            (data) => setAppointments(data),
-            "Failed to load appointments"
-          ),
-          fetchData(
-            "http://localhost:5000/api/doctors",
-            setDoctors,
-            "Failed to load doctors"
-          ),
-        ]);
-      } finally {
-        setInitialLoading(false);
-      }
-    };
+    
 
     loadData();
-  }, [userId]);
+  }, [userId, ]);
 
   // Function to update profiile
   const handleUpdateProfile = async () => {
@@ -229,6 +234,7 @@ const UserDashboard = () => {
     setAppointments((prevAppointments) => [
       newAppointment,
       ...prevAppointments,
+      loadData(),
     ]);
   };
 
@@ -538,16 +544,30 @@ const UserDashboard = () => {
                     <Table.Cell>{doctor.specialty}</Table.Cell>
 
                     <Table.Cell>
+
+
+
+                      {/* This section needs to be done by passing the doctor id to the appointment modal. */}
                       <Button
                         size="xs"
                         className="bg-primary hover:bg-primary-dark"
                         onClick={() => {
-                          setShowAppointmentModal(true);
-                          setActiveTab("appointments");
+                          handleAppointmentModal(doctor._id);
+
+  
+                        
+          
+                
                         }}
                       >
                         Book Appointment
                       </Button>
+                      <BookAppointmentModal
+                showModal={showAppointmentModal}
+                onClose={() => setShowAppointmentModal(false)}
+                onAppointmentBooked={handleNewAppointment}
+                doctorId={selectedDoctorId} // Pass the selected doctor ID to the modal
+              />
                     </Table.Cell>
                   </Table.Row>
                 ))}

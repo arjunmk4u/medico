@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 
-const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked }) => {
+const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked, doctor }) => {
   const [doctors, setDoctors] = useState([]);
   const [doctorId, setDoctorId] = useState("");
   const [availableSlots, setAvailableSlots] = useState([]);
@@ -18,6 +18,9 @@ const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked }) => {
 
   // Fetch doctors from backend
   useEffect(() => {
+    if (doctor?._id) {
+      setDoctorId(doctor._id);
+    }
     const fetchDoctors = async () => {
       try {
         setLoadingDoctors(true);
@@ -120,16 +123,22 @@ const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked }) => {
       }
 
       toast.success(`Appointment booked for ${formattedDate} at ${selectedSlot}`);
+      const doctor = doctors.find((doc) => doc._id === doctorId)?.name || "Unknown Doctor";
 
       const newAppointment = {
-        doctor: doctors.find((doc) => doc._id === doctorId)?.name || "Unknown Doctor",
+        // doctor: doctors.find((doc) => doc._id === doctorId)?.name || "Unknown Doctor",
+        // doctor: {
+        //   _id: doctorId,
+        //   name: doctors.find((doc) => doc._id === doctorId)?.name || "Unknown Doctor",
+        // },
+        doctorId : doctor,
         appointmentDate: formattedDate,
         appointmentTime: selectedSlot,
         status: "pending",
       };
       
       if (onAppointmentBooked) {
-        onAppointmentBooked(newAppointment);
+        await onAppointmentBooked(newAppointment);
       }
       
       resetForm();

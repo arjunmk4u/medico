@@ -7,13 +7,11 @@ import HomeLayout from "./components/HomeLayout";
 import LogIn from "./components/Login";
 import UserDashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Patients from "./components/Patients";
 import AdminDashboard from "./components/AdminDashboard";
 import AdminDoctorManagement from "./components/AdminDoctorManagement";
 import Register from "./components/Register";
 import AppointmentsList from "./components/AppointmentsList";
 import DoctorDashboard from "./components/DoctorDashboard";
-import PredictionTool from "./components/PredictionTool";
 import GlobalLoader from "./components/GlobalLoader";
 
 const AppContent = () => {
@@ -42,7 +40,6 @@ const AppContent = () => {
         <Route path="/" element={<HomeLayout />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<Register />} />
-        <Route path="/patients" element={<Patients />} />
         <Route
           path="/dashboard"
           element={
@@ -83,7 +80,6 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/predict" element={<PredictionTool />} />
       </Routes>
     </>
   );
