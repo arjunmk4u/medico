@@ -112,7 +112,7 @@ const AppointmentDetail = () => {
 
         <div className="flex justify-end space-x-4 mt-6">
           <Button color="failure">Cancel Appointment</Button>
-          <Button color="warning">Reschedule</Button>
+          {/* <Button color="warning">Reschedule</Button> */}
         </div>
       </Card>
     </div>

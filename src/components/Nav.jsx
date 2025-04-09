@@ -50,7 +50,7 @@ const Nav = () => {
           </NavLink>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu hamburger Button */}
         <button onClick={() => setIsDrawerOpen(true)} className="md:hidden text-primary">
           <Menu size={28} />
         </button>

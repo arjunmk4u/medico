@@ -44,7 +44,6 @@ const DoctorDashboard = () => {
           }
         );
 
-        console.log(doctorRes);
 
         const doctorData = doctorRes.data.doctor;
         const allAppointments = doctorRes.data.appointments || [];

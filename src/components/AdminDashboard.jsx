@@ -22,6 +22,8 @@ import { motion } from "framer-motion";
 import { format, subDays } from "date-fns";
 import axios from "axios";
 
+
+// Base url for backend
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
@@ -96,7 +98,7 @@ const AdminDashboard = () => {
     fetchDashboardData();
   }, []);
 
-  // Status badge component - SIMPLIFIED VERSION
+  // Status badge component 
   const StatusBadge = ({ status }) => {
     const statusColors = {
       pending: "warning",
@@ -112,6 +114,8 @@ const AdminDashboard = () => {
     );
   };
 
+
+  // Functon for signout
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -231,7 +235,6 @@ const AdminDashboard = () => {
               <Table.HeadCell>Doctor</Table.HeadCell>
               <Table.HeadCell>Date & Time</Table.HeadCell>
               <Table.HeadCell>Status</Table.HeadCell>
-              <Table.HeadCell>Actions</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
               {dashboardData.recentAppointments.length > 0 ? (
@@ -257,18 +260,7 @@ const AdminDashboard = () => {
                     <Table.Cell>
                       <StatusBadge status={appt.status || "pending"} />
                     </Table.Cell>
-                    <Table.Cell>
-                      <Tooltip content="View details">
-                        <Button
-                          as={Link}
-                          to={`/appointments/${appt._id}`}
-                          size="xs"
-                          color="light"
-                        >
-                          Details
-                        </Button>
-                      </Tooltip>
-                    </Table.Cell>
+                    
                   </Table.Row>
                 ))
               ) : (

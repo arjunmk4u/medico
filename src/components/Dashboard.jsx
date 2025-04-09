@@ -46,16 +46,19 @@ const UserDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [predictionType, setPredictionType] = useState(null);
 
+  // Function to handle modal for disease prediction
   const handleOpenModal = (type) => {
     setPredictionType(type);
     setIsModalOpen(true);
   };
 
+  // Function to handle modal for appointment bookings
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setPredictionType(null);
   };
 
+  // Fetch the usename, id, token stored in localstorage
   const user = useMemo(
     () => JSON.parse(localStorage.getItem("user")) || {},
     []
@@ -63,7 +66,7 @@ const UserDashboard = () => {
   const userId = user?.id || null;
   const token = useMemo(() => localStorage.getItem("token"), []);
 
-  // ✅ Fix: Run only once when component mounts
+  // useEffect function for profile updation.
   useEffect(() => {
     if (userId) {
       setEditProfile({
@@ -74,7 +77,7 @@ const UserDashboard = () => {
     }
   }, [userId]); // Removed `user` dependency to prevent infinite loops
 
-  // ✅ Fix: Fetch function moved outside to avoid re-creation
+  // Fetch data function. used for fetching various datas like appointment doctor etc
   const fetchData = async (url, setter, errorMessage) => {
     try {
       const response = await fetch(url, {
@@ -93,7 +96,7 @@ const UserDashboard = () => {
     }
   };
 
-  // ✅ Fix: Fetch data only when `userId` is available
+  // Fetching appointments, doctors.
   useEffect(() => {
     if (!userId) return;
 
@@ -117,8 +120,9 @@ const UserDashboard = () => {
     };
 
     loadData();
-  }, [userId]); // ✅ Removed `fetchData` from dependencies
+  }, [userId]);
 
+  // Function to update profiile
   const handleUpdateProfile = async () => {
     setLoading(true);
     try {
@@ -144,6 +148,8 @@ const UserDashboard = () => {
       setLoading(false);
     }
   };
+
+  // Toast settings for error and succsess
   const showErrorToast = (message) => {
     toast.error(message, {
       position: "top-right",
@@ -168,11 +174,13 @@ const UserDashboard = () => {
     });
   };
 
+  // Handling the tabs in dashboard for mobile first
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     setIsDrawerOpen(false);
   };
 
+  // Function to cancel appointment
   const handleCancelAppointment = async (appointmentId) => {
     console.log("Canceling appointment with ID:", appointmentId); // Debugging line
 
@@ -216,6 +224,7 @@ const UserDashboard = () => {
     }
   };
 
+  // Function to book appointment
   const handleNewAppointment = (newAppointment) => {
     setAppointments((prevAppointments) => [
       newAppointment,
@@ -223,12 +232,15 @@ const UserDashboard = () => {
     ]);
   };
 
+  // Signout function
   const handleSignOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "/login";
   };
 
+  // Main web layout starts here
+  // Loader
   if (initialLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -507,27 +519,24 @@ const UserDashboard = () => {
         )}
 
         {activeTab === "doctors" && (
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">
+          <div className="bg-white p-8 rounded-lg shadow-md">
+            <h2 className="text-3xl font-bold text-gray-800 mb-8">
               Doctors List
             </h2>
             <Table hoverable>
               <Table.Head>
                 <Table.HeadCell>Name</Table.HeadCell>
                 <Table.HeadCell>Specialty</Table.HeadCell>
-                <Table.HeadCell>Availability</Table.HeadCell>
                 <Table.HeadCell>Action</Table.HeadCell>
               </Table.Head>
-              <Table.Body className="divide-y">
+              <Table.Body className="divide-y ">
                 {doctors.map((doctor) => (
                   <Table.Row key={doctor._id} className="hover:bg-gray-50">
                     <Table.Cell className="font-medium text-gray-900">
                       {doctor.name}
                     </Table.Cell>
                     <Table.Cell>{doctor.specialty}</Table.Cell>
-                    <Table.Cell>
-                      {doctor.availableDays?.join(", ") || "Not specified"}
-                    </Table.Cell>
+
                     <Table.Cell>
                       <Button
                         size="xs"

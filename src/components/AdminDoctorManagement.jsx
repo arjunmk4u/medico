@@ -23,8 +23,8 @@ const AdminDoctorManagement = () => {
     specialty: "",
     description: "",
     image: "",
-    password: "", // 🔹 New: Password field
-    role: "doctor", // 🔹 Default role
+    password: "", 
+    role: "doctor", 
   });
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -116,7 +116,7 @@ const AdminDoctorManagement = () => {
 
   // Open modal for editing an existing doctor (populate form)
   const handleEdit = (doctor) => {
-    setForm({ ...doctor, password: "" }); // Don't pre-fill password
+    setForm({ ...doctor, password: "" }); //password is not spreaded
     setEditingId(doctor._id);
     setIsModalOpen(true);
   };
