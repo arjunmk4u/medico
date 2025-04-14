@@ -1,14 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import about_one from "../assets/img/about-3_01.png";
-import about_two from "../assets/img/about-4.png";
 
 const MissionPage = () => {
   return (
     <>
       {/* Mission Section */}
       <motion.div
-        className="container-md md:w-full h-full shadow-xl bg-bg-primary flex-row-reverse mx-auto md:flex items-center justify-between inset-0 md:px-28 md:py-28 px-10"
+        className="container-md md:w-full h-full shadow-xl bg-bg-primary flex-row-reverse mx-auto md:flex items-center justify-between inset-0 md:px-28 md:py-28 px-10 overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}

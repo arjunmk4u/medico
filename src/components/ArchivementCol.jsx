@@ -4,16 +4,7 @@ import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 const ArchivementCol = () => {
-    const [scrolled, setScrolled] = useState(false);
-  
-    useEffect(() => {
-      const handleScroll = () => {
-        setScrolled(window.scrollY > 100);
-      };
-  
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    // State to track if the component is in view and to trigger the animation
     const { ref, inView } = useInView({
       triggerOnce: true, // Ensures it animates only once
       threshold: 0.9, // Triggers when 50% of the component is visible

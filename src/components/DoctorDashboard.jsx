@@ -54,7 +54,7 @@ const DoctorDashboard = () => {
           (appt) => appt.appointmentDate.split("T")[0] === today
         );
 
-        // Set state
+        // Set state with fetched data for doctor and appointments
         setDoctor(doctorData);
         setAppointments(allAppointments);
         setTodayAppointments(todayAppointments);

@@ -4,7 +4,7 @@ import about_one from "../assets/img/about-1.png";
 
 const AboutPage = () => {
   return (
-    <div className="container-md md:w-full h-full mx-auto md:flex items-center justify-between inset-0 md:px-28 md:py-28 px-10">
+    <div className="container-md md:w-full h-full mx-auto md:flex items-center justify-between inset-0 md:px-28 md:py-28 px-10 overflow-hidden">
       {/* Left Section: About Text */}
       <motion.div
         className="about md:w-1/2 flex flex-col justify-center"

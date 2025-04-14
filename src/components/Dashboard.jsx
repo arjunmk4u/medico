@@ -32,11 +32,6 @@ const UserDashboard = () => {
   const [doctors, setDoctors] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  const [editProfile, setEditProfile] = useState({
-    name: "",
-    email: "",
-    phone: "",
-  });
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
@@ -44,6 +39,11 @@ const UserDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [predictionType, setPredictionType] = useState(null);
   const [selectedDoctorId, setSelectedDoctorId] = useState(null);
+  const [editProfile, setEditProfile] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
 
   // Function to handle modal for disease prediction
   const handleOpenModal = (type) => {
@@ -51,10 +51,12 @@ const UserDashboard = () => {
     setIsModalOpen(true);
   };
 
+  // Function to handle appointment modal
+  // This function sets the selected doctor ID and opens the appointment modal (incomplete)
   const handleAppointmentModal = (doctorId) => {
     setSelectedDoctorId(doctorId);
     setShowAppointmentModal(true);
-  }
+  };
 
   // Function to handle modal for appointment bookings
   const handleCloseModal = () => {
@@ -79,7 +81,7 @@ const UserDashboard = () => {
         phone: user.phone || "",
       });
     }
-  }, [userId]); // Removed `user` dependency to prevent infinite loops
+  }, [userId]); // Removed `user` dependency to prevent infinite loops.
 
   // Fetch data function. used for fetching various datas like appointment doctor etc
   const fetchData = async (url, setter, errorMessage) => {
@@ -119,13 +121,13 @@ const UserDashboard = () => {
       setInitialLoading(false);
     }
   };
+
+  // The function loaddata() is called outside th4 useEffect because it needs to be called on other events too.
+  // For example, when the user books an appointment, we need to refresh the appointments list.
   useEffect(() => {
     if (!userId) return;
-
-    
-
     loadData();
-  }, [userId, ]);
+  }, [userId]);
 
   // Function to update profiile
   const handleUpdateProfile = async () => {
@@ -550,21 +552,16 @@ const UserDashboard = () => {
                         className="bg-primary hover:bg-primary-dark"
                         onClick={() => {
                           handleAppointmentModal(doctor._id);
-
-  
-                        
-          
-                
                         }}
                       >
                         Book Appointment
                       </Button>
                       <BookAppointmentModal
-                showModal={showAppointmentModal}
-                onClose={() => setShowAppointmentModal(false)}
-                onAppointmentBooked={handleNewAppointment}
-                doctorId={selectedDoctorId} // Pass the selected doctor ID to the modal
-              />
+                        showModal={showAppointmentModal}
+                        onClose={() => setShowAppointmentModal(false)}
+                        onAppointmentBooked={handleNewAppointment}
+                        doctorId={selectedDoctorId} // Pass the selected doctor ID to the modal
+                      />
                     </Table.Cell>
                   </Table.Row>
                 ))}
