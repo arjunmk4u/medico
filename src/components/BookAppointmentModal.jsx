@@ -6,6 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked, doctor }) => {
   const [doctors, setDoctors] = useState([]);
   const [doctorId, setDoctorId] = useState("");
@@ -24,7 +27,7 @@ const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked, doctor 
     const fetchDoctors = async () => {
       try {
         setLoadingDoctors(true);
-        const response = await fetch("http://localhost:5000/api/doctors");
+        const response = await fetch(`${API_BASE_URL}/api/doctors`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -57,7 +60,7 @@ const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked, doctor 
           const formattedDate = format(appointmentDate, "yyyy-MM-dd");
 
           const response = await fetch(
-            `http://localhost:5000/api/appointments/times/${doctorId}/${formattedDate}`
+            `${API_BASE_URL}/api/appointments/times/${doctorId}/${formattedDate}`
           );
 
           if (!response.ok) {
@@ -103,7 +106,7 @@ const BookAppointmentModal = ({ showModal, onClose, onAppointmentBooked, doctor 
 
       const formattedDate = format(appointmentDate, "yyyy-MM-dd");
       
-      const response = await fetch("http://localhost:5000/api/appointments/book", {
+      const response = await fetch(`${API_BASE_URL}/api/appointments/book`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

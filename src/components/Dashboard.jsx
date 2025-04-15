@@ -26,6 +26,9 @@ import "react-toastify/dist/ReactToastify.css";
 import BookAppointmentModal from "./BookAppointmentModal";
 import MLPredictor from "./PredictionTool";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 const UserDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [appointments, setAppointments] = useState([]);
@@ -107,12 +110,12 @@ const UserDashboard = () => {
     try {
       await Promise.all([
         fetchData(
-          `http://localhost:5000/api/appointments/user/${userId}`,
+          `${API_BASE_URL}/api/appointments/user/${userId}`,
           (data) => setAppointments(data),
           "Failed to load appointments"
         ),
         fetchData(
-          "http://localhost:5000/api/doctors",
+          `${API_BASE_URL}/api/doctors`,
           setDoctors,
           "Failed to load doctors"
         ),
@@ -133,7 +136,7 @@ const UserDashboard = () => {
   const handleUpdateProfile = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/users/profile", {
+      const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -204,7 +207,7 @@ const UserDashboard = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/appointments/${appointmentId}/cancel`,
+        `${API_BASE_URL}/api/appointments/${appointmentId}/cancel`,
         {
           method: "DELETE",
           headers: {

@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+
 const MLPredictor = ({ isOpen, onClose, type }) => {
   const [formData, setFormData] = useState({
     // Diabetes Inputs
@@ -55,7 +59,7 @@ const MLPredictor = ({ isOpen, onClose, type }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5001/predict/${type}`,
+        `${API_BASE_URL}/predict/${type}`,
         requestData,
         { headers: { "Content-Type": "application/json" } }
       );

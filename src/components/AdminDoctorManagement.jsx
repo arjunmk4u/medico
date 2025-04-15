@@ -14,6 +14,10 @@ import {
   HiOutlinePlus,
 } from "react-icons/hi";
 
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 const AdminDoctorManagement = () => {
   const [doctors, setDoctors] = useState([]);
   const [form, setForm] = useState({
@@ -33,7 +37,7 @@ const AdminDoctorManagement = () => {
   // Fetch doctors from backend
   const fetchDoctors = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/doctors");
+      const response = await fetch(`${API_BASE_URL}/api/doctors`);
       const data = await response.json();
       setDoctors(data);
     } catch (error) {
@@ -57,8 +61,8 @@ const AdminDoctorManagement = () => {
     e.preventDefault();
     const method = editingId ? "PUT" : "POST";
     const url = editingId
-      ? `http://localhost:5000/api/doctors/${editingId}`
-      : "http://localhost:5000/api/doctors";
+      ? `${API_BASE_URL}/api/doctors/${editingId}`
+      : `${API_BASE_URL}/api/doctors`;
 
     try {
       const response = await fetch(url, {
@@ -89,7 +93,7 @@ const AdminDoctorManagement = () => {
   // Delete Doctor
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/doctors/${id}`, {
+      await fetch(`${API_BASE_URL}/api/doctors/${id}`, {
         method: "DELETE",
       });
       fetchDoctors();

@@ -12,6 +12,9 @@ import {
   FiPlus,
 } from "react-icons/fi";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 const DoctorDashboard = () => {
   const navigate = useNavigate();
   const [doctor, setDoctor] = useState(null);
@@ -28,7 +31,6 @@ const DoctorDashboard = () => {
     completed: 0,
     cancelled: 0,
   });
-  const API_BASE_URL = "http://localhost:5000";
 
   useEffect(() => {
     const fetchData = async () => {
