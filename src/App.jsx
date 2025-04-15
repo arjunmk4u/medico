@@ -12,7 +12,6 @@ import AdminDoctorManagement from "./components/AdminDoctorManagement";
 import Register from "./components/Register";
 import AppointmentsList from "./components/AppointmentsList";
 import DoctorDashboard from "./components/DoctorDashboard";
-import GlobalLoader from "./components/GlobalLoader";
 
 const AppContent = () => {
   const location = useLocation(); 
@@ -20,7 +19,6 @@ const AppContent = () => {
 
   return (
     <>
-      <GlobalLoader />
       {showNavbar && <Nav />} {/* Show Navbar on Home, Login, and Signup */}
 
       <ToastContainer
