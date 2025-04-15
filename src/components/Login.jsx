@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <div className="bg-white rounded-xl shadow-xl flex flex-col md:flex-row overflow-hidden w-full max-w-3xl">
-        <div className="hidden md:flex items-center justify-center p-8 bg-gray-50">
+        <div className=" md:flex items-center justify-center p-8 bg-gray-50">
           <img 
             src={login} 
             alt="Login Illustration" 
