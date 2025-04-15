@@ -22,7 +22,7 @@ const Nav = () => {
     <>
       {/* Navbar Container */}
       <nav
-        className={`fixed z-50 inset-0 mx-auto px-10 md:px-28 h-14 flex items-center justify-between transition-all duration-500 ${
+        className={`fixed inset-0 mx-auto px-10 md:px-28 h-14 flex items-center justify-between transition-all duration-500 ${
           scrolled ? "bg-bg-secondary shadow-md" : "bg-transparent"
         }`}
       >
