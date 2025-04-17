@@ -1,9 +1,20 @@
-import React from "react";
 import { motion } from "framer-motion";
 import bg from "../assets/img/bg.png";
 import { BsArrowRightCircle } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 
 function LandingPage() {
+
+  
+    const navigate = useNavigate();
+    const handleClick = () => {
+      navigate('/login');
+    } 
+  
+
+
   return (
     <div className="container-md h-full xl:flex items-center flex-row-reverse xl:w-full xl:h-full overflow-hidden bg-bg-primary relative">
       {/* Right Side (Image) */}
@@ -55,6 +66,8 @@ function LandingPage() {
           className="group bg-primary h-auto my-2 p-2 rounded-md text-bg-secondary text-center flex items-center justify-around shadow-md transition duration-300 ease-in-out hover:scale-110"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={handleClick}
+         
         >
           Explore More{" "}
           <BsArrowRightCircle className="w-auto h-full text-center mx-3 py-2 text-bold animate-pulse transition-all duration-100 group-hover:translate-x-1" />

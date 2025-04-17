@@ -254,8 +254,9 @@ const UserDashboard = () => {
   // Loader
   if (initialLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex flex-col justify-center items-center h-screen">
         <Spinner size="xl" />
+        <h4>Loading...</h4>
       </div>
     );
   }
@@ -266,7 +267,9 @@ const UserDashboard = () => {
       {/* Mobile Hamburger Button */}
       <button
         onClick={() => setIsDrawerOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-primary text-white hover:bg-primary-dark transition-colors duration-200"
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        className={`md:hidden fixed top-4 left-4 z-50 p-2 rounded-lg  text-primary hover:text-primary-dark transition-colors duration-200 ${isDrawerOpen ? "hidden" : "block"}`}
       >
         <FaBars className="h-6 w-6" />
       </button>
@@ -325,7 +328,7 @@ const UserDashboard = () => {
         position="left"
         className="md:hidden"
       >
-        <Drawer.Header title="Menu" className="bg-primary text-white" />
+        <Drawer.Header title="Menu" className=" text-white" />
         <Drawer.Items className="bg-white">
           {[
             { name: "Home", icon: FaHome, key: "home" },
@@ -350,7 +353,7 @@ const UserDashboard = () => {
       </Drawer>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 md:ml-64 py-16">
+      <div className="flex-1 p-6 md:ml-64 py-16 overflow-hidden">
         {activeTab === "home" && (
           <>
             <h2 className="text-3xl font-bold text-gray-800 mb-6">
@@ -358,11 +361,11 @@ const UserDashboard = () => {
             </h2>
 
             {/* Upcoming Appointments */}
-            <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+            <div className="bg-white p-6 rounded-lg shadow-md mb-6 overflow-auto">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
                 Upcoming Appointments
               </h3>
-              <Table hoverable className="bg-white">
+              <Table hoverable className="bg-white ">
                 <Table.Head>
                   <Table.HeadCell>Doctor</Table.HeadCell>
                   <Table.HeadCell>Date</Table.HeadCell>
@@ -454,17 +457,19 @@ const UserDashboard = () => {
           </>
         )}
 
+        {/* Appointment tab  */}
+
         {activeTab === "appointments" && (
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold text-gray-800">
+          <div className="bg-white p-5 rounded-lg shadow-md overflow-auto ">
+            <div className="flex justify-between items-center mb-5">
+              <h2 className="text-sm md:text-3xl font-bold text-gray-800">
                 Your Appointments
               </h2>
               <Button
-                className="bg-primary hover:bg-primary-dark"
+                className="bg-primary   hover:bg-primary-dark"
                 onClick={() => setShowAppointmentModal(true)}
               >
-                <FaPlus className="mr-2" /> Book New Appointment
+                New Appointment
               </Button>
               <BookAppointmentModal
                 showModal={showAppointmentModal}
@@ -472,7 +477,7 @@ const UserDashboard = () => {
                 onAppointmentBooked={handleNewAppointment}
               />
             </div>
-            <Table hoverable>
+            <Table hoverable >
               <Table.Head>
                 <Table.HeadCell>Doctor</Table.HeadCell>
                 <Table.HeadCell>Date</Table.HeadCell>
@@ -480,7 +485,7 @@ const UserDashboard = () => {
                 <Table.HeadCell>Status</Table.HeadCell>
                 <Table.HeadCell>Actions</Table.HeadCell>
               </Table.Head>
-              <Table.Body className="divide-y">
+              <Table.Body className="divide-y ">
                 {appointments.map((appt) => (
                   <Table.Row key={appt._id} className="hover:bg-gray-50">
                     <Table.Cell className="font-medium text-gray-900">
@@ -530,7 +535,7 @@ const UserDashboard = () => {
         )}
 
         {activeTab === "doctors" && (
-          <div className="bg-white p-8 rounded-lg shadow-md">
+          <div className="bg-white p-8 rounded-lg shadow-md overflow-auto ">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">
               Doctors List
             </h2>
@@ -540,7 +545,7 @@ const UserDashboard = () => {
                 <Table.HeadCell>Specialty</Table.HeadCell>
                 <Table.HeadCell>Action</Table.HeadCell>
               </Table.Head>
-              <Table.Body className="divide-y ">
+              <Table.Body className="divide-y">
                 {doctors.map((doctor) => (
                   <Table.Row key={doctor._id} className="hover:bg-gray-50">
                     <Table.Cell className="font-medium text-gray-900">
