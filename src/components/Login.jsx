@@ -52,7 +52,7 @@ const Login = () => {
           <img 
             src={login} 
             alt="Login Illustration" 
-            className="w-full max-w-xs object-cover rounded-md" 
+            className="w-full max-w-2xl object-cover rounded-md" 
           />
         </div>
 
