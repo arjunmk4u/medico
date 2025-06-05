@@ -18,7 +18,7 @@ const MLPredictor = ({ isOpen, onClose, type }) => {
     age: "",
 
     // Heart Disease Inputs
-    heartAge: "",
+    age: "",
     sex: "0",
     chestPain: "0",
     restingBP: "",
