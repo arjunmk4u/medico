@@ -109,7 +109,7 @@ const MLPredictor = ({ isOpen, onClose, type }) => {
                 { name: "age", placeholder: "Age (years)" },
               ]
             : [
-                { name: "heartAge", placeholder: "Age (years)" },
+                { name: "age", placeholder: "Age (years)" },
                 { name: "restingBP", placeholder: "Resting BP (mm Hg)" },
                 { name: "cholesterol", placeholder: "Cholesterol (mg/dL)" },
                 { name: "maxHeartRate", placeholder: "Max Heart Rate" },
