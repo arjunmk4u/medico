@@ -3,8 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+const API_BASE_URL = "http://localhost:5001";
 
 const MLPredictor = ({ isOpen, onClose, type }) => {
   const [formData, setFormData] = useState({
