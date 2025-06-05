@@ -50,7 +50,7 @@ const MLPredictor = ({ isOpen, onClose, type }) => {
     const fields =
       type === "diabetes"
         ? ["pregnancies", "glucose", "bloodPressure", "skinThickness", "insulin", "bmi", "diabetesPedigree", "age"]
-        : ["heartAge", "sex", "chestPain", "restingBP", "cholesterol", "fastingBS", "restingECG", "maxHeartRate", "exerciseAngina", "oldpeak", "stSlope", "ca", "thal"];
+        : ["age", "sex", "chestPain", "restingBP", "cholesterol", "fastingBS", "restingECG", "maxHeartRate", "exerciseAngina", "oldpeak", "stSlope", "ca", "thal"];
 
     fields.forEach((field) => {
       requestData[field] = formData[field] === "" ? "" : Number(formData[field]);
